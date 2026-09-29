@@ -3,224 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Restaurant Yazedd – Griechische Küche</title>
-  <meta name="description" content="Restaurant Yazedd – Griechische Spezialitäten, Mittagstisch, Familienfeiern. Frisch, herzlich, mitten in der Stadt." />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <title>Yazedd Live – Radio & TV</title>
+  <meta name="description" content="Modernes Live-Radio und Live-TV in einer Seite – HLS-Streaming mit hls.js" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="header" id="top">
-    <nav class="nav container">
-      <a href="#top" class="logo"><span class="logo-mark">Y</span> YAZEDD</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">☰</button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#start">Home</a></li>
-        <li><a href="#kueche">Unsere Küche</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#speisekarte">Speisekarte</a></li>
-        <li><a href="#feiern">Feiern</a></li>
-        <li><a href="#kontakt">Kontakt + Anfahrt</a></li>
-        <li><a href="#reservierung" class="btn btn-small">Tisch reservieren</a></li>
-      </ul>
-    </nav>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#">
+        <span class="brand-dot"></span>
+        YAZEDD <span class="brand-light">LIVE</span>
+      </a>
+      <div class="topbar-status">
+        <span id="statusDot" class="dot dot-idle"></span>
+        <span id="statusText">Bereit</span>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <!-- HERO im Stil: Griechisches Restaurant + Ort -->
-    <section class="hero" id="start">
-      <div class="hero-inner container">
-        <p class="eyebrow light">Griechisches Restaurant</p>
-        <h1>YAZEDD</h1>
-        <p class="hero-sub">Herzlich willkommen – genießen Sie griechische Gastfreundschaft, hausgemachte Spezialitäten und frische Zutaten.</p>
-        <div class="hero-actions">
-          <a href="#speisekarte" class="btn">Speisekarte</a>
-          <a href="#reservierung" class="btn btn-outline-light">Tisch reservieren</a>
+  <main class="container">
+
+    <!-- 1. Großer Video-Player für Live-TV (spielt auch Radio-Audio ab) -->
+    <section class="player-section">
+      <div class="player-wrap">
+        <video id="player" controls playsinline preload="none" poster=""></video>
+
+        <!-- Offline-Fallback / Radio-Cover -->
+        <div id="fallback" class="fallback">
+          <div class="fallback-art">📡</div>
+          <p id="fallbackTitle">Wähle unten einen Sender</p>
+          <p id="fallbackSub" class="muted">TV oder Radio – der Stream startet im Player.</p>
         </div>
-      </div>
-    </section>
 
-    <!-- UNSERE KÜCHE / Vorschläge -->
-    <section id="kueche" class="section container">
-      <p class="eyebrow center">Our Kitchen</p>
-      <h2 class="center">Vorschläge aus der Küche</h2>
-      <p class="center muted">Unsere beliebtesten Klassiker – alle Gerichte werden frisch zubereitet.</p>
-      <div class="dishes">
-        <article class="dish">
-          <div class="dish-img dish-1" role="img" aria-label="Bifteki"></div>
-          <h3>Bifteki</h3>
-          <p>Saftige Hacksteaks vom Rind – wahlweise gefüllt, dazu Pommes oder Reis, Salat und Dip nach Wahl.</p>
-          <span class="price">ab 16,90 €</span>
-        </article>
-        <article class="dish">
-          <div class="dish-img dish-2" role="img" aria-label="Souvlaki"></div>
-          <h3>Souvlaki</h3>
-          <p>Zart marinierte Spieße vom Grill mit Beilage, hausgemachtem Tsatsiki und frischem Salat.</p>
-          <span class="price">ab 17,50 €</span>
-        </article>
-        <article class="dish">
-          <div class="dish-img dish-3" role="img" aria-label="Gyros"></div>
-          <h3>Gyros</h3>
-          <p>Würzig mariniert, knusprig vom Drehspieß – mit Pommes, Reis, Tsatsiki und gemischtem Salat.</p>
-          <span class="price">ab 15,90 €</span>
-        </article>
+        <div id="liveBadge" class="live-badge hidden">● LIVE</div>
       </div>
-    </section>
 
-    <!-- INFO-BANNER -->
-    <section class="banner">
-      <div class="container banner-grid">
+      <div class="now-playing">
         <div>
-          <h3>🥙 Griechische Burger</h3>
-          <p>Alle Burger <strong>ab 8,90 €</strong> – mit Feta, Oliven und Tsatsiki.</p>
+          <p class="label">JETZT LÄUFT</p>
+          <h2 id="nowPlaying">– kein Sender gewählt –</h2>
+          <p id="nowPlayingDesc" class="muted">Klicke auf eine Karte, um zu starten.</p>
         </div>
-        <div>
-          <h3>🧒 Familienfreundlich</h3>
-          <p>Kindergerichte und kleine Portionen für unsere kleinen Gäste.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- NEWS / Mittagstisch + Öffnungszeiten -->
-    <section id="news" class="section container">
-      <p class="eyebrow center">What's new</p>
-      <h2 class="center">Mittagstisch & Öffnungszeiten</h2>
-      <div class="news-grid">
-        <div class="news-card">
-          <div class="news-img news-1"></div>
-          <h3>Mittagstisch</h3>
-          <p class="big-price">ab 11,95 €</p>
-          <p>Montag bis Freitag von 11:30 bis 14:00 Uhr – wöchentlich wechselnde Gerichte inkl. Salat.</p>
-          <a href="#speisekarte" class="btn btn-outline">Speisekarte ansehen</a>
-        </div>
-        <div class="news-card">
-          <div class="news-img news-2"></div>
-          <h3>6 Tage geöffnet</h3>
-          <p class="big-price">Mo Ruhetag</p>
-          <p>Di–So: 11:30 – 22:00 Uhr. Montags ist Ruhetag – an Feiertagen öffnen wir gerne für Sie.</p>
-          <a href="#kontakt" class="btn btn-outline">Anfahrt & Kontakt</a>
+        <div class="player-controls">
+          <button id="btnToggle" class="btn" disabled>▶ Abspielen</button>
+          <button id="btnMute" class="btn btn-ghost">🔊 Ton an/aus</button>
         </div>
       </div>
     </section>
 
-    <!-- SPEISEKARTE -->
-    <section id="speisekarte" class="section section-alt">
-      <div class="container">
-        <p class="eyebrow center">Speisekarte</p>
-        <h2 class="center">Griechische Klassiker bei Yazedd</h2>
-        <div class="tabs" role="tablist">
-          <button class="tab active" data-tab="vorspeisen" role="tab">Vorspeisen</button>
-          <button class="tab" data-tab="grill" role="tab">Vom Grill</button>
-          <button class="tab" data-tab="dessert" role="tab">Dessert & Getränke</button>
-        </div>
-
-        <div class="menu-panel active" id="vorspeisen">
-          <div class="menu-item"><div><h4>Tzatziki mit Fladenbrot</h4><p>Cremiger Joghurt, Gurke, Knoblauch, Olivenöl</p></div><span class="price">6,50 €</span></div>
-          <div class="menu-item"><div><h4>Gegrillte Peperoni mit Feta</h4><p>Tomate, Olivenöl, Oregano</p></div><span class="price">7,90 €</span></div>
-          <div class="menu-item"><div><h4>Dolmades</h4><p>Gefüllte Weinblätter mit Reis und Kräutern</p></div><span class="price">6,90 €</span></div>
-          <div class="menu-item"><div><h4>Griechischer Bauernsalat</h4><p>Tomate, Gurke, Olive, Feta, Zwiebeln</p></div><span class="price">9,50 €</span></div>
-        </div>
-
-        <div class="menu-panel" id="grill">
-          <div class="menu-item"><div><h4>Gyros-Teller</h4><p>Pommes, Reis, Tsatsiki, gemischter Salat</p></div><span class="price">15,90 €</span></div>
-          <div class="menu-item"><div><h4>Souvlaki (2 Spieße)</h4><p>Pommes, Reis, Tsatsiki, Salat</p></div><span class="price">17,50 €</span></div>
-          <div class="menu-item"><div><h4>Bifteki gefüllt mit Feta</h4><p>Pommes oder Reis, Salat, Tsatsiki</p></div><span class="price">18,90 €</span></div>
-          <div class="menu-item"><div><h4>Yazedd Grillplatte (für 2)</h4><p>Gyros, Souvlaki, Bifteki, Beilagen, 2 Dips</p></div><span class="price">36,00 €</span></div>
-        </div>
-
-        <div class="menu-panel" id="dessert">
-          <div class="menu-item"><div><h4>Baklava</h4><p>Blätterteig, Nüsse, Honig</p></div><span class="price">5,90 €</span></div>
-          <div class="menu-item"><div><h4>Galaktoboureko</h4><p>Grießauflauf mit Vanille und Sirup</p></div><span class="price">5,50 €</span></div>
-          <div class="menu-item"><div><h4>Griechischer Mokka / Ouzo</h4><p>Klassischer Abschluss auf griechische Art</p></div><span class="price">ab 3,00 €</span></div>
-        </div>
+    <!-- Filter -->
+    <section class="filter-row">
+      <div class="filters">
+        <button class="chip active" data-filter="all">Alle</button>
+        <button class="chip" data-filter="tv">📺 TV</button>
+        <button class="chip" data-filter="radio">📻 Radio</button>
       </div>
+      <p class="hint muted">Streams stehen im <code>stations</code>-Array in <code>script.js</code>.</p>
     </section>
 
-    <!-- FEIERN -->
-    <section id="feiern" class="section container split">
-      <div>
-        <p class="eyebrow">Feiern bei uns</p>
-        <h2>Familienfeste & Betriebsfeste</h2>
-        <p>Fragen Sie gerne bei uns an – wir richten komplette Veranstaltungen in unseren Räumen aus: Geburtstage, Hochzeiten, Konfirmationen und Firmenfeiern bis ca. 80 Personen.</p>
-        <ul class="checklist">
-          <li>Festmenüs & Buffets nach Absprache</li>
-          <li>Getränke-Arrangements möglich</li>
-          <li>Persönliche Beratung vor Ort</li>
-        </ul>
-        <a href="#reservierung" class="btn">Anfrage senden</a>
-      </div>
-      <div class="feier-img" role="img" aria-label="Festlich gedeckter Tisch"></div>
+    <!-- 2. Senderliste (wird per JS aus stations gerendert) -->
+    <section>
+      <h3 class="section-title">📺 Live-TV</h3>
+      <div id="tvGrid" class="grid"></div>
+
+      <h3 class="section-title">📻 Radiosender</h3>
+      <div id="radioGrid" class="grid"></div>
     </section>
 
-    <!-- ÜBER UNS -->
-    <section class="section section-blue">
-      <div class="container center">
-        <p class="eyebrow light">Mitten in der Stadt</p>
-        <h2>Wir lieben die griechische Küche</h2>
-        <p class="max-w">Bei Yazedd kochen wir mit Olivenöl, frischen Kräutern und viel Herz. Ob Mittagstisch, Abendessen mit Freunden oder große Feier – bei uns sind Sie Familie.</p>
-      </div>
+    <section class="help">
+      <h3>So tauschst du die Stream-URLs aus</h3>
+      <ol>
+        <li>Öffne <code>script.js</code>.</li>
+        <li>Suche das <code>stations</code>-Array oben in der Datei.</li>
+        <li>Ersetze die <code>url</code>-Platzhalter durch deine eigenen <code>.m3u8</code>-URLs (oder MP3-Direktstreams für Radio).</li>
+      </ol>
     </section>
 
-    <!-- GALERIE -->
-    <section class="section container">
-      <p class="eyebrow center">Eindrücke</p>
-      <h2 class="center">Bildergalerie</h2>
-      <div class="gallery">
-        <div class="g g1"><span>Frisch vom Grill</span></div>
-        <div class="g g2"><span>Gemütlicher Gastraum</span></div>
-        <div class="g g3"><span>Mezze & Vorspeisen</span></div>
-        <div class="g g4"><span>Sommerterrasse</span></div>
-      </div>
-    </section>
-
-    <!-- KONTAKT + RESERVIERUNG -->
-    <section id="kontakt" class="section section-alt">
-      <div class="container">
-        <p class="eyebrow center">Location & Contact</p>
-        <h2 class="center">Anfahrt + Kontakt</h2>
-        <div class="split" style="margin-top:2rem">
-          <div>
-            <h3>Tischreservierung</h3>
-            <form id="reservationForm" class="form form-light" novalidate>
-              <div class="form-row">
-                <label>Vorname*<input type="text" name="firstname" required /></label>
-                <label>Nachname*<input type="text" name="lastname" required /></label>
-              </div>
-              <label>E-Mail-Adresse*<input type="email" name="email" placeholder="name@beispiel.de" required /></label>
-              <label>Nachricht / Reservierungsanfrage<textarea name="message" rows="4" placeholder="Datum, Uhrzeit, Personenzahl …"></textarea></label>
-              <button type="submit" class="btn btn-full">Absenden</button>
-              <p class="form-note" id="formNote" role="status"></p>
-              <p class="small">Vielen Dank! Wir melden uns schnellstmöglich zurück.</p>
-            </form>
-          </div>
-          <div id="reservierung">
-            <h3>So finden Sie uns</h3>
-            <p><strong>Restaurant Yazedd</strong><br />Musterstraße 4, 12345 Musterstadt</p>
-            <p>📞 <a href="tel:+490451000000">0451 / 00 00 00</a><br />✉️ <a href="mailto:hallo@yazedd.de">hallo@yazedd.de</a></p>
-            <div class="hours">
-              <div><span>Dienstag – Sonntag</span><span>11:30 – 22:00 Uhr</span></div>
-              <div><span>Montag</span><span>Ruhetag</span></div>
-              <div><span>Mittagstisch</span><span>11:30 – 14:00 Uhr</span></div>
-            </div>
-            <div class="map">
-              <p>🗺️ Karte<br /><small><a href="https://maps.google.com/?q=Musterstadt" target="_blank" rel="noopener">In Google Maps öffnen</a></small></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="footer">
-    <div class="container footer-grid">
-      <div><strong>YAZEDD</strong><p>Griechisches Restaurant<br />Herzlich, frisch, familiengeführt.</p></div>
-      <div><strong>Links</strong><br /><a href="#kueche">Unsere Küche</a><br /><a href="#speisekarte">Speisekarte</a><br /><a href="#kontakt">Kontakt</a></div>
-      <div><strong>Rechtliches</strong><br /><a href="#" onclick="return false">Impressum</a><br /><a href="#" onclick="return false">Datenschutz</a></div>
-    </div>
-    <p class="copyright">© <span id="year"></span> Restaurant Yazedd · Alle Preise inkl. MwSt. · Eigene, originale Webseite – inspiriert vom Stil griechischer Restaurantseiten.</p>
+    <p>© <span id="year"></span> Yazedd Live · HLS via hls.js (CDN) · Safari nutzt den nativen Player</p>
   </footer>
 
+  <!-- hls.js über CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="script.js"></script>
 </body>
 </html>
