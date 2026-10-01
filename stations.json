@@ -1,0 +1,62 @@
+[
+  {
+    "id": "tv-1",
+    "name": "Yazedd TV Prime",
+    "type": "tv",
+    "genre": "News · HD",
+    "logo": "📺",
+    "color": "#e11d48",
+    "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    "description": "Platzhalter — eigene .m3u8-URL eintragen."
+  },
+  {
+    "id": "tv-2",
+    "name": "Yazedd Cinema",
+    "type": "tv",
+    "genre": "Film · HD",
+    "logo": "🎬",
+    "color": "#7c3aed",
+    "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+    "description": "Platzhalter — eigene .m3u8-URL eintragen."
+  },
+  {
+    "id": "r-1",
+    "name": "Yazedd Radio Pop",
+    "type": "radio",
+    "genre": "Pop · 128kbps",
+    "logo": "🎧",
+    "color": "#0ea5e9",
+    "url": "https://ice1.somafm.com/groovesalad-128-mp3",
+    "description": "Direktstream (MP3) — eigene URL eintragen."
+  },
+  {
+    "id": "r-2",
+    "name": "Yazedd Radio Lounge",
+    "type": "radio",
+    "genre": "Lounge · 128kbps",
+    "logo": "🎶",
+    "color": "#22c55e",
+    "url": "https://ice1.somafm.com/deepspaceone-128-mp3",
+    "description": "Direktstream (MP3) — eigene URL eintragen."
+  },
+  {
+    "id": "r-3",
+    "name": "Yazedd News Audio",
+    "type": "radio",
+    "genre": "News · HLS",
+    "logo": "📰",
+    "color": "#f59e0b",
+    "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    "description": "Radio als HLS — nur Ton im Player."
+  },
+  {
+    "id": "v-1",
+    "name": "Yazedd Highlight-Clip",
+    "type": "video",
+    "genre": "Mediathek · MP4",
+    "logo": "🎬",
+    "color": "#a855f7",
+    "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "description": "Beispiel-Video — ersetze durch dein eigenes Video (MP4 oder .m3u8)."
+  }
+]
